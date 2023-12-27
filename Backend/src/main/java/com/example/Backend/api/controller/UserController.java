@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-public class UserAccountController {
+public class UserController {
     private UserService userService;
 
 
     @Autowired
-    public UserAccountController(UserService userService){
+    public UserController(UserService userService){
         this.userService=userService;
 
     }

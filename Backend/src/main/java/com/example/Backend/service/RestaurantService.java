@@ -8,53 +8,52 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.Optional;
+
 @Service
 public class RestaurantService {
     public RestaurantService() {
 
     }
 
-    public String getRestaurant(String rst_id){
-        String url = "https://api.yelp.com/v3/businesses/"+rst_id;
-        WebClient webClient = WebClient.builder()
-                .baseUrl("https://api.yelp.com/v3")
-                .defaultHeader("Authorization", "Bearer 8P4gCUEQ-RUWmoNdiJJoB4gwupzwULScE6X1_taPcOYDM6iGDuKY1aedFqvwIY18Ty2byGzUJrNA2iFQonGHhy0Rt6Nq0IqR3-sKfsQ1zE7_ceTNWvpEwiMRwZ1zZXYx")
-                .build();
+    public Optional<Restaurant> getRestaurant(String rst_id){
+        Optional optional = Optional.empty();
 
-        String response =  webClient.get()
-                .uri("/businesses/r_BrIgzYcwo1NAuG9dLbpg")
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+        try{
+            String url = "/businesses/"+rst_id;
+            WebClient webClient = WebClient.builder()
+                    .baseUrl("https://api.yelp.com/v3")
+                    .defaultHeader("Authorization", "Bearer 8P4gCUEQ-RUWmoNdiJJoB4gwupzwULScE6X1_taPcOYDM6iGDuKY1aedFqvwIY18Ty2byGzUJrNA2iFQonGHhy0Rt6Nq0IqR3-sKfsQ1zE7_ceTNWvpEwiMRwZ1zZXYx")
+                    .build();
 
-
-        String name = getName(response);
-        String imgUrl = getImageUrl(response);
-        String phone = getPhone(response);
-        String address = getAddress(response);
-        int rating = getRating(response);
-        String category = getCategory(response);
-        String price = getPrice(response);
-        Boolean is_open = getOpen(response);
-
-        System.out.println(response);
-
-        System.out.println(rst_id);
-        System.out.println(name);
-        System.out.println(imgUrl);
-        System.out.println(phone);
-        System.out.println(address);
-        System.out.println(rating);
-        System.out.println(category);
-        System.out.println(price);
-        System.out.println(is_open);
-
-        Restaurant rst = new Restaurant(rst_id,name,imgUrl,phone,address,rating,category,price,is_open);
-
-        System.out.println(rst.toString());
+            String response =  webClient.get()
+                    .uri(url)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
 
 
-        return response;
+            String name = getName(response);
+            String imgUrl = getImageUrl(response);
+            String phone = getPhone(response);
+            String address = getAddress(response);
+            int rating = getRating(response);
+            String category = getCategory(response);
+            String price = getPrice(response);
+            Boolean is_open = getOpen(response);
+
+
+            Restaurant rst = new Restaurant(rst_id,name,imgUrl,phone,address,rating,category,price,is_open);
+
+            optional = Optional.of(rst);
+
+            System.out.println(optional);
+        }catch(Exception e){
+            System.out.println("error, invalid id");
+        }
+
+        return optional;
+
     }
 
     private Boolean getOpen(String response) {
