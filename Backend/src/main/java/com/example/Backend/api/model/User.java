@@ -1,18 +1,22 @@
 package com.example.Backend.api.model;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document("User")
 public class User {
 
-    private int id;
+    @Id
+    private String id;
     private String name;
     private String city;
     private String email;
     private String password;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -48,7 +52,7 @@ public class User {
         return password;
     }
 
-    public User(int id, String name, String city, String email, String password) {
+    public User(String id, String name, String city, String email, String password) {
         this.id = id;
         this.name = name;
         this.city = city;

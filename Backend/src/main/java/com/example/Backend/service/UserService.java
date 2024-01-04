@@ -1,6 +1,9 @@
 package com.example.Backend.service;
 
 import com.example.Backend.api.model.User;
+import com.example.Backend.api.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -8,72 +11,54 @@ import java.util.*;
 @Service
 public class UserService {
 
-    private List<User> userList;
+//    private List<User> userList;
+    private final UserRepository userrepo;
 
 
+    @Autowired
+    public UserService(UserRepository userrepo){
 
-    public UserService(){
-        userList= new ArrayList<>();
-        User user1 = new User(1,"Ida","Toronto","ida@gmail.com","password");
-        User user2 = new User(2,"Hans","NYC","hans@gmail.com","password");
-        User user3 = new User(3,"Lars","Toronto","lars@gmail.com","password");
-        User user4 = new User(4,"Ben","NYC","ben@gmail.com","password");
-        User user5 = new User(5,"Eva","Vancouver", "eva@gmail.com","password");
-
-        userList.addAll(Arrays.asList(user1,user2,user3,user4,user5));
-    }
-
-    public Optional<User> getUser(Integer id){
-        Optional optional = Optional.empty();
-        for (User user:userList){
-            if(id==user.getId()){
-                optional = Optional.of(user);
-                return optional;
-            }
-        }
-
-        return optional;
-
-    }
-
-    public Optional<User> putUser(Integer id,String fieldName,String val){
-        Optional optional = Optional.empty();
-        for (User user:userList){
-            if(id==user.getId()){
-                if (fieldName.equals("email")){
-                    user.setEmail(val);
-                }else if (fieldName.equals("password")){
-                    user.setPassword(val);
-                }else if (fieldName.equals("city")){
-                    user.setCity(val);
-                }else if (fieldName.equals("name")){
-                    user.setName(val);
-                }
-
-                optional = Optional.of(user);
-                return optional;
-            }
-        }
-
-
-        return optional;
+        this.userrepo=userrepo;
 
     }
 
 
+    public List<User> getAllUsers() {
+        return userrepo.findAll();
+    }
 
-    public Optional<User> deleteUser(Integer id){
-        Optional optional = Optional.empty();
-        Iterator<User> iterator = userList.iterator();
-        while (iterator.hasNext()) {
-            User user = iterator.next();
-            if (user.getId() == id) {
-                optional = Optional.of(user);
-                iterator.remove();
-                return optional;
-            }
+    public Optional<User> getUser(String id){
+        Optional <User> user=this.userrepo.findById(id);
+
+        return user;
+
+    }
+//
+    public Optional<User> putUser(String id,User updatedUser){
+        Optional<User> existingUser = userrepo.findById(id);
+        if (existingUser.isPresent()) {
+            // Update the fields
+            User userToUpdate = existingUser.get();
+
+            userToUpdate.setEmail(updatedUser.getEmail());
+            userToUpdate.setCity(updatedUser.getCity());
+            userToUpdate.setPassword(updatedUser.getPassword());
+            userToUpdate.setName(updatedUser.getName());
+
+            userrepo.save(userToUpdate);
         }
-        return optional;
+
+        return existingUser;
+
+    }
+    public Optional<User> deleteUser(String id){
+
+        Optional <User> user=this.userrepo.findById(id);
+
+        if(user.isPresent()){
+            this.userrepo.deleteById(id);
+        }
+        return user;
 
     }
 }
