@@ -1,10 +1,8 @@
 package com.example.Backend.api.controller;
 
-import com.example.favourites.FavouritesApplication;
-import com.example.favourites.model.Favourite;
-import com.example.favourites.repository.FavouriteRepository;
-import com.example.favourites.resource.FavouriteRequest;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import com.example.Backend.api.model.Favourite;
+import com.example.Backend.api.repository.FavouriteRepository;
+import com.example.Backend.service.FavouriteRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

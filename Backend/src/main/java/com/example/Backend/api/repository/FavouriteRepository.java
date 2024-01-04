@@ -1,5 +1,5 @@
 package com.example.Backend.api.repository;
-import com.example.favourites.model.Favourite;
+import com.example.Backend.api.model.Favourite;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
