@@ -1,10 +1,10 @@
-package com.example.Backend;
+package com.example.favourites;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BackendApplicationTests {
+class FavouritesApplicationTests {
 
 	@Test
 	void contextLoads() {
