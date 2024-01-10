@@ -6,63 +6,58 @@ import com.example.Backend.api.repository.PreferenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class PreferenceService {
-    private final List<Preference> prefList;
+    private List<Preference> prefList;
+    private final PreferenceRepository preferenceRepository;
 
 
-    public PreferenceService() {
-        prefList = new ArrayList<>();
-
-        Preference pref1 = new Preference("user1", 1, 1, false, false, false, false);
-        Preference pref2 = new Preference("user2", 1, 1, false, false, false, false);
-
-        prefList.add(pref1);
-        prefList.add(pref2);
+    @Autowired
+    public PreferenceService(PreferenceRepository preferenceRepository) {
+        this.preferenceRepository = preferenceRepository;
     }
 
-    public Optional<Preference> getPreference(String id) {
-        Optional<Preference> preference = Optional.empty();
-        //preference = this.preferenceRepository.findById(id);
-        for (Preference pref : prefList) {
-            if (pref.getId().equals(id)) {
-                preference = Optional.of(pref);
-                return preference;
-            }
+    public ResponseEntity<?> getPreference(String id) {
+        Optional<Preference> preference = this.preferenceRepository.findById(id);
+
+        if (preference.isPresent()) {
+            return ResponseEntity.ok(preference);
         }
-        return preference;
+
+        return ResponseEntity.notFound().build();
     }
 
-    public Optional<Preference> postPreference(String id, Preference pref) {
-        Optional<Preference> optional = Optional.empty();
-        if (prefList.stream().noneMatch(p -> p.getId().equals((id)))) {
-            prefList.add(pref);
-            optional = Optional.of(pref);
+    public ResponseEntity<?> postPreference(String id, Preference pref) {
+        if (this.preferenceRepository.existsById(id)) {
+            return ResponseEntity.status(409).body("User Preference Already Exists");
         }
-        return optional;
+
+        return ResponseEntity.status(201).body(this.preferenceRepository.save(pref));
     }
 
-    public Optional<Preference> putPreference(String id, Preference upPref) {
-        Optional<Preference> existingPreference = prefList.stream().filter(p -> p.getId().equals(id)).findFirst();
-        if (existingPreference.isPresent()) {
-            Preference prefToUpdate = existingPreference.get();
+    public ResponseEntity<?> putPreference(String id, Preference updatedPreference) {
+        Optional<Preference> currentPreference = this.preferenceRepository.findById(id);
 
-            prefToUpdate.setPrice(upPref.getPrice());
-            prefToUpdate.setDistance(upPref.getDistance());
-            prefToUpdate.setHalal(upPref.isHalal());
-            prefToUpdate.setGlutenFree(upPref.isGlutenFree());
-            prefToUpdate.setVegan(upPref.isVegan());
-            prefToUpdate.setVegetarian(upPref.isVegetarian());
+        if (currentPreference.isPresent()) {
+            return ResponseEntity.status(204).body(this.preferenceRepository.save(updatedPreference));
         }
-        return existingPreference;
+
+        return ResponseEntity.status(404).body("User Not Found");
     }
 
-    public String deletePreference(String id) {
-        boolean flag = prefList.removeIf(x -> x.getId().equals(id));
-        return !flag ? "User not found" : "User deleted";
+    public ResponseEntity<?> deletePreference(String id) {
+        Optional<Preference> preference = this.preferenceRepository.findById(id);
+
+        if (preference.isPresent()) {
+            this.preferenceRepository.deleteById(id);
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(404).body("User Not Found");
     }
 }

@@ -2,6 +2,7 @@ package com.example.Backend.api.controller;
 import com.example.Backend.api.model.Preference;
 import com.example.Backend.service.PreferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -15,26 +16,23 @@ public class PreferenceController {
         this.prefService = prefService;
     }
 
-    @PostMapping("/pref")
-    public Preference postPreference(@RequestParam String id, @RequestBody Preference newPreference) {
-        Optional<Preference> pref = prefService.postPreference(id, newPreference);
-        return (Preference) pref.orElse(null);
+    @GetMapping("/pref/{id}")
+    public ResponseEntity<?> getPreference(@PathVariable String id) {
+        return prefService.getPreference(id);
     }
 
-    @GetMapping("/pref")
-    public Preference getPreference(@RequestParam String id) {
-        Optional<Preference> pref = prefService.getPreference(id);
-        return (Preference) pref.orElse(null);
+    @PostMapping("/pref/{id}")
+    public ResponseEntity<?> postPreference(@PathVariable String id, @RequestBody Preference newPreference) {
+        return prefService.postPreference(id, newPreference);
     }
 
-    @PutMapping("/pref")
-    public Preference putPreference(@RequestParam String id, @RequestBody Preference updatedPreference) {
-        Optional<Preference> pref = prefService.putPreference(id, updatedPreference);
-        return (Preference) pref.orElse(null);
+    @PutMapping("/pref/{id}")
+    public ResponseEntity<?> putPreference(@PathVariable String id, @RequestBody Preference updatedPreference) {
+        return prefService.putPreference(id, updatedPreference);
     }
 
-    @DeleteMapping("/pref")
-    public String deletePreference(@RequestParam String id) {
+    @DeleteMapping("/pref/{id}")
+    public ResponseEntity<?> deletePreference(@PathVariable String id) {
         return prefService.deletePreference(id);
     }
 }

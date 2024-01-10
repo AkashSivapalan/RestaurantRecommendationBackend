@@ -72,6 +72,8 @@ public class Preference {
         this.glutenFree = glutenFree;
     }
 
+    //public Preference() {}
+
     public Preference(String id, int distance, int price, boolean halal, boolean vegetarian, boolean vegan, boolean glutenFree) {
         this.id = id;
         this.distance = distance;
