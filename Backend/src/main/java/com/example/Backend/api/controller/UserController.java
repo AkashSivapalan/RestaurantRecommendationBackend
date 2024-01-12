@@ -29,35 +29,30 @@ public class UserController {
 
     }
     @GetMapping("/user")
-    public User getUser(@RequestParam String id){
-        Optional user = userService.getUser(id);
-        if (user.isPresent()){
-            return (User) user.get();
-        }
-        return null;
+    public ResponseEntity<User> getUser(@RequestParam String id) {
+        Optional<User> user = userService.getUser(id);
 
-
+        return user.map(u -> ResponseEntity.ok(u))
+                .orElse(ResponseEntity.notFound().build());
     }
-    @DeleteMapping("/user")
-    public User deleteUser(@RequestParam String id){
 
-    System.out.println(id);
-        Optional user = userService.deleteUser(id);
-        if (user.isPresent()){
-            return (User) user.get();
-        }
-        return null;
+    @DeleteMapping("/user")
+    public ResponseEntity<User> deleteUser(@RequestParam String id){
+
+        Optional<User> user = userService.deleteUser(id);
+
+
+        return user.map(u -> ResponseEntity.ok(u))
+                .orElse(ResponseEntity.notFound().build());
 
 
     }
 
     @PutMapping("/user")
-    public User putUser(@RequestParam String id,@RequestBody User updatedUser){
-        Optional user = userService.putUser(id,updatedUser);
-        if (user.isPresent()){
-            return (User) user.get();
-        }
-        return null;
+    public ResponseEntity<User> putUser(@RequestParam String id,@RequestBody User updatedUser){
+        Optional<User> user = userService.putUser(id,updatedUser);
+        return user.map(u -> ResponseEntity.ok(u))
+                .orElse(ResponseEntity.notFound().build());
     }
 
 
