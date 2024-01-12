@@ -33,7 +33,6 @@ public class UserService {
         return user;
 
     }
-//
     public Optional<User> putUser(String id,User updatedUser){
         Optional<User> existingUser = userrepo.findById(id);
         if (existingUser.isPresent()) {
@@ -41,9 +40,10 @@ public class UserService {
             User userToUpdate = existingUser.get();
 
             userToUpdate.setEmail(updatedUser.getEmail());
-            userToUpdate.setCity(updatedUser.getCity());
+            userToUpdate.setAddress(updatedUser.getAddress());
             userToUpdate.setPassword(updatedUser.getPassword());
-            userToUpdate.setName(updatedUser.getName());
+            userToUpdate.setFname(updatedUser.getFname());
+            userToUpdate.setLname(updatedUser.getLname());
 
             userrepo.save(userToUpdate);
         }

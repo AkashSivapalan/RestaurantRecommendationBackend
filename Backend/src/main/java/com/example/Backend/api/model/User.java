@@ -7,8 +7,11 @@ public class User {
 
     @Id
     private String id;
-    private String name;
-    private String city;
+    private String fname;
+
+    private String lname;
+
+    private Address address;
     private String email;
     private String password;
 
@@ -20,12 +23,16 @@ public class User {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFname(String fname) {
+        this.fname = fname;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public void setEmail(String email) {
@@ -36,12 +43,16 @@ public class User {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public String getFname() {
+        return fname;
     }
 
-    public String getCity() {
-        return city;
+    public String getLname() {
+        return lname;
+    }
+
+    public Address getAddress() {
+        return address;
     }
 
     public String getEmail() {
@@ -52,11 +63,16 @@ public class User {
         return password;
     }
 
-    public User(String id, String name, String city, String email, String password) {
+    public User(String id, String fname, String lname, Address address, String email, String password) {
         this.id = id;
-        this.name = name;
-        this.city = city;
+        this.fname = fname;
+        this.lname = lname;
+        this.address = address;
         this.email = email;
         this.password = password;
     }
+
+
+
+
 }
