@@ -1,6 +1,5 @@
 package com.alibou.security.auth;
 
-import com.alibou.security.user.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,9 +34,6 @@ public class RegisterRequest {
    */
   private String password;
 
-  /**
-   * The role assigned to the user, determining their access permissions.
-   */
-  private Role role;
+
 }
 

@@ -38,22 +38,9 @@ public class User implements UserDetails {
     // User's hashed password
     private String password;
 
-    // User's role (e.g., ROLE_USER, ROLE_ADMIN)
-    private Role role;
 
     // List of authentication tokens associated with the user
     private List<Token> tokens;
-
-    /**
-     * Get the authorities granted to the user based on their role.
-     *
-     * @return Collection of authorities
-     */
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Convert the user's role into a collection of GrantedAuthority objects
-        return role.getAuthorities();
-    }
 
     /**
      * Get the unique identifier for the user.
@@ -62,6 +49,11 @@ public class User implements UserDetails {
      */
     public String getId() {
         return id;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
     /**
