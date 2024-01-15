@@ -1,6 +1,7 @@
-package com.example.Backend;
+package com.example.Backend.api.controller;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.example.Backend.api.model.ErrorResponse;
+import com.example.Backend.api.model.Restaurant;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
@@ -62,7 +63,7 @@ public class RestaurantController {
         headers.set("Authorization", "Bearer " + token);
 
         String url = "https://api.yelp.com/v3/businesses/" + id;
-        RestTemplate rt =   new RestTemplate();
+        RestTemplate rt = new RestTemplate();
 
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
