@@ -1,7 +1,8 @@
 package com.example.Backend.api.controller;
 
+import com.example.Backend.api.model.Business;
 import com.example.Backend.api.model.ErrorResponse;
-import com.example.Backend.api.model.Restaurant;
+import com.example.Backend.api.model.RestaurantYelp;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
@@ -21,7 +22,7 @@ public class RestaurantController {
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
         try{
-            ResponseEntity<Object> restaurants = rt.exchange(url, HttpMethod.GET, entity, Object.class);
+            ResponseEntity<Business> restaurants = rt.exchange(url, HttpMethod.GET, entity, Business.class);
             return restaurants.getBody();
 
         } catch (HttpClientErrorException e){
@@ -50,6 +51,9 @@ public class RestaurantController {
                 default:
                     return new ResponseEntity<>(new ErrorResponse("EXTERNAL SERVER ERROR", "Server-Side Error making search request to Yelp API"), HttpStatus.BAD_REQUEST);
             }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(new ErrorResponse("INTERNAL SERVER ERROR", "A problem occured"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
 
@@ -68,7 +72,7 @@ public class RestaurantController {
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
         try{
-            ResponseEntity<Object> restaurant = rt.exchange(url, HttpMethod.GET, entity, Object.class);
+            ResponseEntity<RestaurantYelp> restaurant = rt.exchange(url, HttpMethod.GET, entity, RestaurantYelp.class);
             return restaurant.getBody();
 
         } catch (HttpClientErrorException e){
@@ -97,6 +101,9 @@ public class RestaurantController {
                 default:
                     return new ResponseEntity<>(new ErrorResponse("EXTERNAL SERVER ERROR", "Server-Side Error making search request to Yelp API"), HttpStatus.BAD_REQUEST);
             }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(new ErrorResponse("INTERNAL SERVER ERROR", "A problem occured"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
 
