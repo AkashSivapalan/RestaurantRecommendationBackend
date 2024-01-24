@@ -78,9 +78,10 @@ public class UserService {
 
             userToUpdate.setEmail(updatedUser.getEmail());
             userToUpdate.setAddress(updatedUser.getAddress());
-            userToUpdate.setPassword(updatedUser.getPassword());
+            userToUpdate.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
             userToUpdate.setFname(updatedUser.getFname());
             userToUpdate.setLname(updatedUser.getLname());
+
 
             userrepo.save(userToUpdate);
         }

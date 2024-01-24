@@ -6,6 +6,7 @@ import com.example.Backend.api.repository.UserRepository;
 import com.example.Backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +51,7 @@ public class UserController {
 
     }
     @GetMapping("/user")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<User> getUser(@RequestParam String id) {
         Optional<User> user = userService.getUser(id);
 
@@ -58,6 +60,7 @@ public class UserController {
     }
 
     @DeleteMapping("/user")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<User> deleteUser(@RequestParam String id){
 
         Optional<User> user = userService.deleteUser(id);
@@ -70,6 +73,7 @@ public class UserController {
     }
 
     @PutMapping("/user")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<User> putUser(@RequestParam String id,@RequestBody User updatedUser){
         Optional<User> user = userService.putUser(id,updatedUser);
         return user.map(u -> ResponseEntity.ok(u))
