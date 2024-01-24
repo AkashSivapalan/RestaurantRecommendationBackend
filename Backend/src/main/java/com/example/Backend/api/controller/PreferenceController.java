@@ -3,6 +3,7 @@ import com.example.Backend.api.model.Preference;
 import com.example.Backend.service.PreferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -17,21 +18,25 @@ public class PreferenceController {
     }
 
     @GetMapping("/pref/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getPreference(@PathVariable String id) {
         return prefService.getPreference(id);
     }
 
     @PostMapping("/pref/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> postPreference(@PathVariable String id, @RequestBody Preference newPreference) {
         return prefService.postPreference(id, newPreference);
     }
 
     @PutMapping("/pref/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> putPreference(@PathVariable String id, @RequestBody Preference updatedPreference) {
         return prefService.putPreference(id, updatedPreference);
     }
 
     @DeleteMapping("/pref/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> deletePreference(@PathVariable String id) {
         return prefService.deletePreference(id);
     }
