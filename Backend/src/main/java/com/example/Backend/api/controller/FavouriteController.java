@@ -4,6 +4,7 @@ import com.example.Backend.api.model.Favourite;
 import com.example.Backend.api.repository.FavouriteRepository;
 import com.example.Backend.service.FavouriteRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class FavouriteController {
     public FavouriteController(FavouriteRepository favouritesRepository) {
         this.favouritesRepository = favouritesRepository;
     }
+    @PreAuthorize("isAuthenticated()")
 
     @GetMapping("/favourite")
     public ResponseEntity<List<Favourite>> getAllFavourites(){
