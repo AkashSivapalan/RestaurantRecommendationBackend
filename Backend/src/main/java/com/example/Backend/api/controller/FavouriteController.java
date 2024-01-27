@@ -19,10 +19,6 @@ public class FavouriteController {
         this.favouritesRepository = favouritesRepository;
     }
 
-    @GetMapping("/favourite")
-    public ResponseEntity<List<Favourite>> getAllFavourites(){
-        return ResponseEntity.ok(this.favouritesRepository.findAll());
-    }
 
     @PostMapping("/favourite")
     @PreAuthorize("isAuthenticated()")

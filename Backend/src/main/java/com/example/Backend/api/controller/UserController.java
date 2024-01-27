@@ -45,12 +45,6 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-
-    @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllUsers(){
-        return ResponseEntity.ok(userService. getAllUsers());
-
-    }
     @GetMapping("/user")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<User> getUser(@RequestParam String id) {
