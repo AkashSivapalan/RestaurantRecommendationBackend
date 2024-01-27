@@ -4,6 +4,7 @@ import com.example.Backend.api.model.Favourite;
 import com.example.Backend.api.repository.FavouriteRepository;
 import com.example.Backend.service.FavouriteRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class FavouriteController {
     }
 
     @PostMapping("/favourite")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Favourite> createFavourite(@RequestBody FavouriteRequest favouriteRequest){
 
         if (favouritesRepository.existsByUserIdAndRestaurantId(favouriteRequest.getUserId(), favouriteRequest.getRestaurantId())) {
@@ -37,6 +39,7 @@ public class FavouriteController {
     }
 
     @GetMapping("/favourite/{UserId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity getAllFavouritebyUserId(@PathVariable String UserId) {
         List<Favourite> favourites = this.favouritesRepository.findByUserId(UserId);
 
@@ -49,6 +52,7 @@ public class FavouriteController {
     }
 
     @DeleteMapping("/favourite/{UserId}/{RestaurantId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity deleteFavourite(@PathVariable String UserId, @PathVariable String RestaurantId) {
         Optional<Favourite> optionalFavourite = favouritesRepository.findByUserIdAndRestaurantId(UserId, RestaurantId);
 
@@ -61,6 +65,7 @@ public class FavouriteController {
     }
 
     @DeleteMapping("/favourite/{userId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity deleteAllFavouritesByUserId(@PathVariable String userId) {
         List<Favourite> favourites = favouritesRepository.findByUserId(userId);
 

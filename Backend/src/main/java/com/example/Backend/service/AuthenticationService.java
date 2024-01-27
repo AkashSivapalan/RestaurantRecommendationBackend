@@ -37,6 +37,10 @@ public class AuthenticationService {
      * @return AuthenticationResponse containing access and refresh tokens.
      */
     public AuthenticationResponse register(RegisterRequest request) {
+        // Check if a user with the same email already exists
+        if (repository.findByEmail(request.getEmail()).isPresent()) {
+            throw new IllegalStateException("Email already taken");
+        }
         var user = User.builder()
                 .fname(request.getFname())
                 .lname(request.getLname())

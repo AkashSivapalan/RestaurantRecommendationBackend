@@ -8,6 +8,7 @@ import com.example.Backend.api.model.RestaurantYelp;
 import com.example.Backend.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
@@ -39,6 +40,7 @@ public class RestaurantController {
 
     @GetMapping("/swipe-left")
     @ResponseBody
+    @PreAuthorize("isAuthenticated()")
     public Object swipeLeft(@RequestParam float latitude, @RequestParam float longitude, @RequestParam int radius, @RequestHeader String token) {
         return YelpApiS.swipeLeft(latitude, longitude, radius, token);
     }

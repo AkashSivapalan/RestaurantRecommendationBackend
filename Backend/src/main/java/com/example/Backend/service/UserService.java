@@ -17,7 +17,7 @@ import java.security.Principal;
 @Service
 public class UserService {
 
-//    private List<User> userList;
+    //    private List<User> userList;
     private final UserRepository userrepo;
     private final PasswordEncoder passwordEncoder;
 
@@ -78,9 +78,10 @@ public class UserService {
 
             userToUpdate.setEmail(updatedUser.getEmail());
             userToUpdate.setAddress(updatedUser.getAddress());
-            userToUpdate.setPassword(updatedUser.getPassword());
+            userToUpdate.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
             userToUpdate.setFname(updatedUser.getFname());
             userToUpdate.setLname(updatedUser.getLname());
+
 
             userrepo.save(userToUpdate);
         }
