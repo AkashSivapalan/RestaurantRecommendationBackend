@@ -1,17 +1,25 @@
-package com.example.Backend;
+package com.example.Backend.service;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.example.Backend.api.model.Business;
+import com.example.Backend.api.model.ErrorResponse;
+import com.example.Backend.api.model.RestaurantYelp;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+@Service
+@RequiredArgsConstructor
+public class yelpApiService {
+    private int lastSelectedIndex = -1;
 
-@RestController
-public class RestaurantController {
-    @GetMapping("/restaurants")
-    @ResponseBody
-    public Object getRestaurants(@RequestParam float latitude, @RequestParam float longitude, @RequestParam int radius, @RequestHeader String token){
+    public Object getRestaurants(float latitude, float longitude, int radius, String token){
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + token);
         String url = "https://api.yelp.com/v3/businesses/search?term=restaurant&latitude=" + latitude + "&longitude=" +
@@ -20,7 +28,7 @@ public class RestaurantController {
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
         try{
-            ResponseEntity<Object> restaurants = rt.exchange(url, HttpMethod.GET, entity, Object.class);
+            ResponseEntity<Business> restaurants = rt.exchange(url, HttpMethod.GET, entity, Business.class);
             return restaurants.getBody();
 
         } catch (HttpClientErrorException e){
@@ -49,33 +57,34 @@ public class RestaurantController {
                 default:
                     return new ResponseEntity<>(new ErrorResponse("EXTERNAL SERVER ERROR", "Server-Side Error making search request to Yelp API"), HttpStatus.BAD_REQUEST);
             }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(new ErrorResponse("INTERNAL SERVER ERROR", "A problem occured"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
     }
 
-    @GetMapping("/restaurant/{id}")
-    @ResponseBody
-    public Object getRestaurantById(@PathVariable String id, @RequestHeader String token){
+
+    public Object getRestaurantById(@PathVariable String id, @RequestHeader String token) {
         HttpHeaders headers = new HttpHeaders();
 
         headers.set("Authorization", "Bearer " + token);
 
         String url = "https://api.yelp.com/v3/businesses/" + id;
-        RestTemplate rt =   new RestTemplate();
+        RestTemplate rt = new RestTemplate();
 
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
-        try{
-            ResponseEntity<Object> restaurant = rt.exchange(url, HttpMethod.GET, entity, Object.class);
+        try {
+            ResponseEntity<RestaurantYelp> restaurant = rt.exchange(url, HttpMethod.GET, entity, RestaurantYelp.class);
+            System.out.println("got here");
             return restaurant.getBody();
 
-        } catch (HttpClientErrorException e){
+        } catch (HttpClientErrorException e) {
             System.out.println(e.getMessage());
-            switch (e.getStatusCode().value()){
+            switch (e.getStatusCode().value()) {
                 case 400:
                     return new ResponseEntity<>(new ErrorResponse("CLIENT ERROR", "Problem making request to Yelp API"), HttpStatus.BAD_REQUEST);
-                case 401,403:
+                case 401, 403:
                     return new ResponseEntity<>(new ErrorResponse("CLIENT ERROR", "Authorization failed - Yelp API"), HttpStatus.UNAUTHORIZED);
                 case 404:
                     return new ResponseEntity<>(new ErrorResponse("CLIENT ERROR", "Could not access resource - Yelp API"), HttpStatus.NOT_FOUND);
@@ -86,9 +95,9 @@ public class RestaurantController {
                 default:
                     return new ResponseEntity<>(new ErrorResponse("CLIENT ERROR", "Client-Side Error making search request to Yelp API"), HttpStatus.BAD_REQUEST);
             }
-        } catch (HttpServerErrorException e){
+        } catch (HttpServerErrorException e) {
             System.out.println(e.getMessage());
-            switch (e.getStatusCode().value()){
+            switch (e.getStatusCode().value()) {
                 case 500:
                     return new ResponseEntity<>(new ErrorResponse("EXTERNAL SERVER ERROR", "Internal Server Error - Yelp API"), HttpStatus.INTERNAL_SERVER_ERROR);
                 case 503:
@@ -96,9 +105,36 @@ public class RestaurantController {
                 default:
                     return new ResponseEntity<>(new ErrorResponse("EXTERNAL SERVER ERROR", "Server-Side Error making search request to Yelp API"), HttpStatus.BAD_REQUEST);
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(new ErrorResponse("INTERNAL SERVER ERROR", "A problem occured"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
     }
+
+    public Object getNextRestaurant(float latitude, float longitude, int radius, String token) {
+        // Get a list of all restaurants
+        Business business = (Business) getRestaurants(latitude, longitude, radius, token);
+
+        // Access the array of restaurants
+        RestaurantYelp[] restaurants = business.getBusinesses();
+
+        lastSelectedIndex++;
+        if(lastSelectedIndex >= restaurants.length){
+            lastSelectedIndex=0;
+        }
+        return (restaurants[lastSelectedIndex]);
+    }
+
+    public Object swipeLeft(float latitude, float longitude, int radius, String token) {
+        try {
+            return getNextRestaurant(latitude, longitude, radius, token);
+
+        } catch (Exception e) {
+            System.out.println("Error swiping left.");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }

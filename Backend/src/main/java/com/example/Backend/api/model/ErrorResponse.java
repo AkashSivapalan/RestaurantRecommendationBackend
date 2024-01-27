@@ -1,4 +1,4 @@
-package com.example.Backend;
+package com.example.Backend.api.model;
 
 public class ErrorResponse {
 
