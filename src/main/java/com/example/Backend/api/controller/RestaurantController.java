@@ -31,6 +31,16 @@ public class RestaurantController {
     }
 
 
+    @GetMapping("/yelpRestaurants")
+    @ResponseBody
+    public Object getYelpRestaurants(@RequestParam float latitude, @RequestParam float longitude, @RequestParam int radius,
+                                     @RequestParam int price,@RequestParam String categories ,@RequestParam int offset ,@RequestHeader String token){
+        return YelpApiS.getYelpRestaurants(latitude, longitude, radius,price,categories, offset, token);
+
+
+    }
+
+
     @GetMapping("/restaurant/{id}")
     @ResponseBody
     public Object getRestaurantById(@PathVariable String id, @RequestHeader String token){
