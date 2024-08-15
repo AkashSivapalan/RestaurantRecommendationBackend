@@ -46,32 +46,32 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<User> getUser(@RequestParam String id) {
-        Optional<User> user = userService.getUser(id);
+    //@PreAuthorize("isAuthenticated()")
+    public ResponseEntity<User> getUser(@RequestParam String email) {
+        Optional<User> user = userService.getUser(email);
 
-        return user.map(u -> ResponseEntity.ok(u))
+        return user.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/user")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<User> deleteUser(@RequestParam String id){
+    //@PreAuthorize("isAuthenticated()")
+    public ResponseEntity<User> deleteUser(@RequestParam String email){
 
-        Optional<User> user = userService.deleteUser(id);
+        Optional<User> user = userService.deleteUser(email);
 
 
-        return user.map(u -> ResponseEntity.ok(u))
+        return user.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
 
 
     }
 
     @PutMapping("/user")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<User> putUser(@RequestParam String id,@RequestBody User updatedUser){
-        Optional<User> user = userService.putUser(id,updatedUser);
-        return user.map(u -> ResponseEntity.ok(u))
+    //@PreAuthorize("isAuthenticated()")
+    public ResponseEntity<User> putUser(@RequestParam String email,@RequestBody User updatedUser){
+        Optional<User> user = userService.putUser(email, updatedUser);
+        return user.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
