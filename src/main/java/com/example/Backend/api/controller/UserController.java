@@ -45,18 +45,18 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/user")
+    @GetMapping("/user/{email}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<User> getUser(@RequestParam String email) {
+    public ResponseEntity<User> getUser(@PathVariable String email) {
         Optional<User> user = userService.getUser(email);
 
         return user.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/user")
+    @DeleteMapping("/user/{email}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<User> deleteUser(@RequestParam String email){
+    public ResponseEntity<User> deleteUser(@PathVariable String email){
 
         Optional<User> user = userService.deleteUser(email);
 
@@ -67,9 +67,9 @@ public class UserController {
 
     }
 
-    @PutMapping("/user")
+    @PutMapping("/user/{email}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<User> putUser(@RequestParam String email,@RequestBody User updatedUser){
+    public ResponseEntity<User> putUser(@PathVariable String email,@RequestBody User updatedUser){
         Optional<User> user = userService.putUser(email, updatedUser);
         return user.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
