@@ -17,6 +17,8 @@ public class Favourite {
         this.favourites = favourites;
     }
 
+    public Favourite () {}
+
     public String getId() {
         return id;
     }
