@@ -19,7 +19,6 @@ public class FavouriteController {
         this.favouritesRepository = favouritesRepository;
     }
 
-
     @PostMapping("/favourite")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Favourite> createFavourite(@RequestBody FavouriteRequest favouriteRequest){
@@ -44,7 +43,6 @@ public class FavouriteController {
         } else {
             return ResponseEntity.ok("Favourites List with User ID " + UserId + " was not found.");
         }
-
     }
 
     @DeleteMapping("/favourite/{UserId}/{RestaurantId}")

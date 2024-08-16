@@ -64,39 +64,37 @@ public class UserService {
         return userrepo.findAll();
     }
 
-    public Optional<User> getUser(String id){
-        Optional <User> user=this.userrepo.findById(id);
-
-        return user;
-
+    public Optional<User> getUser(String email) {
+        return this.userrepo.findByEmail(email);
     }
-    public Optional<User> putUser(String id,User updatedUser){
-        Optional<User> existingUser = userrepo.findById(id);
+
+    public Optional<User> putUser(String email, User updatedUser) {
+        Optional<User> existingUser = userrepo.findByEmail(email);
+
         if (existingUser.isPresent()) {
             // Update the fields
             User userToUpdate = existingUser.get();
 
-            userToUpdate.setEmail(updatedUser.getEmail());
+            userToUpdate.setEmail(updatedUser.getUsername());
             userToUpdate.setAddress(updatedUser.getAddress());
-            userToUpdate.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+            //userToUpdate.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
             userToUpdate.setFname(updatedUser.getFname());
             userToUpdate.setLname(updatedUser.getLname());
 
-
-            userrepo.save(userToUpdate);
+            User savedUser = userrepo.save(userToUpdate);
+            return Optional.of(savedUser);
         }
 
-        return existingUser;
-
+        return Optional.empty();
     }
-    public Optional<User> deleteUser(String id){
 
-        Optional <User> user=this.userrepo.findById(id);
+    public Optional<User> deleteUser(String email) {
+        Optional <User> user=this.userrepo.findByEmail(email);
 
-        if(user.isPresent()){
-            this.userrepo.deleteById(id);
+        if (user.isPresent()) {
+            this.userrepo.deleteByEmail(email);
         }
-        return user;
 
+        return user;
     }
 }
