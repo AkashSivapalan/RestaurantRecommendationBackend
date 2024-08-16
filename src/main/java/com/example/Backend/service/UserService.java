@@ -64,8 +64,8 @@ public class UserService {
         return userrepo.findAll();
     }
 
-    public Optional<User> getUser(String id) {
-        return this.userrepo.findByEmail(id);
+    public Optional<User> getUser(String email) {
+        return this.userrepo.findByEmail(email);
     }
 
     public Optional<User> putUser(String email, User updatedUser) {

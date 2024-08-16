@@ -7,26 +7,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Favourite {
 
     @Id
-    private String favouriteId;
-
+    private String id;
     private String userId;
+    private Resturant[] favourites;
 
-    private String restaurantId;
-
-    public Favourite() {
-    }
-
-    public Favourite(String userId, String restaurantId) {
+    public Favourite(String id, String userId, Resturant[] favourites) {
+        this.id = id;
         this.userId = userId;
-        this.restaurantId = restaurantId;
+        this.favourites = favourites;
     }
 
-    public String getFavouriteId() {
-        return favouriteId;
+    public String getId() {
+        return id;
     }
 
-    public void setFavouriteId(String favouriteId) {
-        this.favouriteId = favouriteId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUserId() {
@@ -37,11 +33,11 @@ public class Favourite {
         this.userId = userId;
     }
 
-    public String getRestaurantId() {
-        return restaurantId;
+    public Resturant[] getFavourites() {
+        return favourites;
     }
 
-    public void setRestaurantId(String restaurantId) {
-        this.restaurantId = restaurantId;
+    public void setFavourites(Resturant[] favourites) {
+        this.favourites = favourites;
     }
 }
