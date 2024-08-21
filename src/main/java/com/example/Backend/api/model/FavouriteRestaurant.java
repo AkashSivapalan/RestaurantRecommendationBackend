@@ -1,22 +1,22 @@
 package com.example.Backend.api.model;
 
-public class Resturant {
-    private String resturantId;
+public class FavouriteRestaurant {
+    private String restaurantId;
     private String name;
     private String imgUrl;
 
-    public Resturant(String resturantId, String name, String imgUrl) {
-        this.resturantId = resturantId;
+    public FavouriteRestaurant(String restaurantId, String name, String imgUrl) {
+        this.restaurantId = restaurantId;
         this.name = name;
         this.imgUrl = imgUrl;
     }
 
     public String getResturantId() {
-        return resturantId;
+        return restaurantId;
     }
 
     public void setResturantId(String resturantId) {
-        this.resturantId = resturantId;
+        this.restaurantId = resturantId;
     }
 
     public String getName() {

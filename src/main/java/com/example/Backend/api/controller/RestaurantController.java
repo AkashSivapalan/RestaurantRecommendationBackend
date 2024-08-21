@@ -1,18 +1,9 @@
 package com.example.Backend.api.controller;
 
 
-import com.example.Backend.api.model.Business;
-import com.example.Backend.api.model.ErrorResponse;
-import com.example.Backend.api.model.Restaurant;
-import com.example.Backend.api.model.RestaurantYelp;
-import com.example.Backend.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RestTemplate;
 import com.example.Backend.service.yelpApiService;
 
 

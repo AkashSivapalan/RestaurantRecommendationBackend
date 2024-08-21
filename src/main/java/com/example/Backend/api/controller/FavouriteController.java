@@ -1,62 +1,52 @@
-//package com.example.Backend.api.controller;
-//
-//import com.example.Backend.api.model.Favourite;
-//import com.example.Backend.api.repository.FavouriteRepository;
-//import com.example.Backend.service.FavouriteRequest;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.security.access.prepost.PreAuthorize;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.util.List;
-//import java.util.Optional;
-//
-//@RestController
-//public class FavouriteController {
-//
-//    private FavouriteRepository favouritesRepository;
-//
-//    public FavouriteController(FavouriteRepository favouritesRepository) {
-//        this.favouritesRepository = favouritesRepository;
-//    }
-//
-//    @PostMapping("/favourite")
-//    @PreAuthorize("isAuthenticated()")
-//    public ResponseEntity<Favourite> createFavourite(@RequestBody FavouriteRequest favouriteRequest){
-//
-//        if (favouritesRepository.existsByUserIdAndRestaurantId(favouriteRequest.getUserId(), favouriteRequest.getRestaurantId())) {
-//            return ResponseEntity.status(409).body(null);
-//        }
-//        Favourite favourite = new Favourite();
-//        favourite.setUserId(favouriteRequest.getUserId());
-//        favourite.setId(favouriteRequest.getRestaurantId());
-//
-//        return ResponseEntity.status(201).body(this.favouritesRepository.save(favourite));
-//    }
-//
-//    @GetMapping("/favourite/{UserId}")
-//    @PreAuthorize("isAuthenticated()")
-//    public ResponseEntity getAllFavouritebyUserId(@PathVariable String UserId) {
-//        List<Favourite> favourites = this.favouritesRepository.findByUserId(UserId);
-//
-//        if (!favourites.isEmpty()) {
-//            return ResponseEntity.ok(favourites);
-//        } else {
-//            return ResponseEntity.ok("Favourites List with User ID " + UserId + " was not found.");
-//        }
-//    }
-//
-//    @DeleteMapping("/favourite/{UserId}/{RestaurantId}")
-//    @PreAuthorize("isAuthenticated()")
-//    public ResponseEntity deleteFavourite(@PathVariable String UserId, @PathVariable String RestaurantId) {
-//        Optional<Favourite> optionalFavourite = favouritesRepository.findByUserIdAndRestaurantId(UserId, RestaurantId);
-//
-//        if (optionalFavourite.isPresent()) {
-//            favouritesRepository.delete(optionalFavourite.get());
-//            return ResponseEntity.ok("Favourite deleted successfully.");
-//        } else {
-//            return ResponseEntity.status(404).body("Favourite not found for User ID: " + UserId + " and Restaurant ID: " + RestaurantId);
-//        }
-//    }
+package com.example.Backend.api.controller;
+
+import com.example.Backend.api.model.Favourite;
+import com.example.Backend.api.model.FavouriteRestaurant;
+import com.example.Backend.service.FavouriteService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+public class FavouriteController {
+    private final FavouriteService favService;
+
+    public FavouriteController(FavouriteService favService) {
+        this.favService = favService;
+    }
+
+    @GetMapping("/favourite/{email}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> getFavourites(@PathVariable String email) {
+        return favService.getFavourites(email);
+    }
+
+    @PostMapping("/favourite/{email}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> postFavourite(@PathVariable String email){
+        return favService.postFavourite(email);
+    }
+
+    @PutMapping("/favourite/{email}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> putFavourite(@PathVariable String email, @RequestBody FavouriteRestaurant favouriteRestaurant) {
+        return favService.putFavourite(email, favouriteRestaurant);
+    }
+
+    @DeleteMapping("/favourite/{email}/{restaurantId}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> deleteFavourite(@PathVariable String email, @PathVariable String restaurantId) {
+        return favService.deleteFavourite(email, restaurantId);
+    }
+
+    @DeleteMapping("/favourite/{email}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> deleteFavourite(@PathVariable String email) {
+        return favService.deleteFavourite(email);
+    }
 //
 //    @DeleteMapping("/favourite/{userId}")
 //    @PreAuthorize("isAuthenticated()")
@@ -71,5 +61,5 @@
 //            return ResponseEntity.status(404).body("No favorites found for User ID " + userId);
 //        }
 //    }
-//
-//}
+
+}

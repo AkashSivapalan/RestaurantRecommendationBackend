@@ -1,23 +1,32 @@
 package com.example.Backend.api.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Document("Favourites")
 public class Favourite {
 
     @Id
     private String id;
-    private String userId;
-    private Resturant[] favourites;
+    private String email;
+    private List<FavouriteRestaurant> restaurants;
 
-    public Favourite(String id, String userId, Resturant[] favourites) {
-        this.id = id;
-        this.userId = userId;
-        this.favourites = favourites;
+    public Favourite(String email) {
+        this.email = email;
+        this.restaurants = new ArrayList<FavouriteRestaurant>();
     }
-
-    public Favourite () {}
 
     public String getId() {
         return id;
@@ -27,19 +36,19 @@ public class Favourite {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Resturant[] getFavourites() {
-        return favourites;
+    public List<FavouriteRestaurant> getRestaurants() {
+        return restaurants;
     }
 
-    public void setFavourites(Resturant[] favourites) {
-        this.favourites = favourites;
+    public void setRestaurants(List<FavouriteRestaurant> restaurants) {
+        this.restaurants = restaurants;
     }
 }
