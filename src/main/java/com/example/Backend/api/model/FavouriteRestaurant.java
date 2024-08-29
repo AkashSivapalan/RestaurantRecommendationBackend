@@ -1,5 +1,7 @@
 package com.example.Backend.api.model;
 
+import java.util.Objects;
+
 public class FavouriteRestaurant {
     private String restaurantId;
     private String name;
@@ -34,4 +36,19 @@ public class FavouriteRestaurant {
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof FavouriteRestaurant res)) {
+            return false;
+        }
+
+        return this.getResturantId().equals(res.getResturantId());
+    }
+
+
 }

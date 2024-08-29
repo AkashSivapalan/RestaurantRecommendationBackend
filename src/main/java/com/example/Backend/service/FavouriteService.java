@@ -44,10 +44,11 @@ public class FavouriteService {
 
         if (optionalFavourite.isPresent()) {
             Favourite favourite = optionalFavourite.get();
-            if (!favourite.getRestaurants().contains(favouriteRestaurant))
+            if (!favourite.getRestaurants().contains(favouriteRestaurant)) {
                 favourite.getRestaurants().add(favouriteRestaurant);
-
-            return ResponseEntity.status(204).body(this.favRepo.save(favourite));
+                return ResponseEntity.status(204).body(this.favRepo.save(favourite));
+            }
+            return ResponseEntity.status(409).body("Restaurant Already Exists in Favourites");
         }
 
         return ResponseEntity.status(404).body("User Does Not Exist");
