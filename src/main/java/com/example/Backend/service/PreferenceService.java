@@ -33,6 +33,7 @@ public class PreferenceService {
     }
 
     public ResponseEntity<?> postPreference(String id, Preference pref) {
+
         if (this.preferenceRepository.existsById(id)) {
             return ResponseEntity.status(409).body("User Preference Already Exists");
         }
@@ -44,6 +45,7 @@ public class PreferenceService {
         Optional<Preference> currentPreference = this.preferenceRepository.findByEmail(email);
 
         if (currentPreference.isPresent()) {
+            updatedPreference.setId(currentPreference.get().getId());
             return ResponseEntity.status(204).body(this.preferenceRepository.save(updatedPreference));
         }
 
