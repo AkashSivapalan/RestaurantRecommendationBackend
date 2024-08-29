@@ -35,15 +35,17 @@ public class UserController {
     @PatchMapping("/change-pass")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> changePassword(
-            @RequestBody ChangePasswordRequest request,
-            Principal connectedUser
+            @RequestBody ChangePasswordRequest request
     ) {
-        // Delegate the password change operation to the UserService
-        userService.changePassword(request, connectedUser);
+        boolean isPasswordChanged = userService.changePassword(request);
 
-        // Return a ResponseEntity with a 200 OK status to indicate success
-        return ResponseEntity.ok().build();
+        if (isPasswordChanged) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(400).body("Password change failed. Check your current password and new password confirmation.");
+        }
     }
+
 
     @GetMapping("/user/{email}")
     @PreAuthorize("isAuthenticated()")

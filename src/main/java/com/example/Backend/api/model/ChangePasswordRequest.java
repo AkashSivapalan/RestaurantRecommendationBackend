@@ -12,6 +12,8 @@ import lombok.Setter;
 @Builder
 public class ChangePasswordRequest {
 
+    private String email;
+
     // The user's current password
     private String currentPassword;
 
