@@ -1,9 +1,9 @@
+com\example\Backend\service\FavouriteService.class
 com\example\Backend\service\RestaurantService.class
 com\example\Backend\api\repository\TokenRepository.class
 com\example\Backend\api\config\JwtAuthenticationFilter.class
 com\example\Backend\api\controller\RestaurantController.class
 com\example\Backend\api\model\AuthenticationResponse.class
-com\example\Backend\service\FavouriteRequest.class
 com\example\Backend\api\model\ChangePasswordRequest.class
 com\example\Backend\api\model\Preference.class
 com\example\Backend\service\JwtService.class
@@ -32,6 +32,8 @@ com\example\Backend\api\model\AuthenticationRequest.class
 com\example\Backend\api\model\Address.class
 com\example\Backend\api\controller\AuthenticationController.class
 com\example\Backend\service\UserService.class
+com\example\Backend\api\model\FavouriteRestaurant.class
+com\example\Backend\api\model\Favourite$FavouriteBuilder.class
 com\example\Backend\service\AuthenticationService.class
 com\example\Backend\api\config\ApplicationConfig.class
 com\example\Backend\api\repository\UserRepository.class

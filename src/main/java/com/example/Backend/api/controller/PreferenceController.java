@@ -17,10 +17,10 @@ public class PreferenceController {
         this.prefService = prefService;
     }
 
-    @GetMapping("/pref/{id}")
+    @GetMapping("/pref/{email}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> getPreference(@PathVariable String id) {
-        return prefService.getPreference(id);
+    public ResponseEntity<?> getPreference(@PathVariable String email) {
+        return prefService.getPreference(email);
     }
 
     @PostMapping("/pref/{id}")

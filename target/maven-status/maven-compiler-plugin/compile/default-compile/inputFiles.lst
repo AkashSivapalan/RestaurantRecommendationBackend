@@ -10,6 +10,7 @@ C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\se
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\BackendApplication.java
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\api\model\Token.java
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\api\repository\FavouriteRepository.java
+C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\api\model\FavouriteRestaurant.java
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\api\controller\RestaurantController.java
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\api\model\Restaurant.java
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\service\PreferenceService.java
@@ -19,6 +20,7 @@ C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\ap
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\service\AuthenticationService.java
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\api\model\TokenType.java
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\api\controller\AuthenticationController.java
+C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\service\FavouriteService.java
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\api\controller\PreferenceController.java
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\api\repository\PreferenceRepository.java
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\api\model\User.java
@@ -27,7 +29,6 @@ C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\se
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\service\JwtService.java
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\api\config\SecurityConfiguration.java
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\api\model\AuthenticationResponse.java
-C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\service\FavouriteRequest.java
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\api\config\ApplicationConfig.java
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\api\repository\TokenRepository.java
 C:\Users\Ransika\Documents\GitHub\RRBackend\src\main\java\com\example\Backend\api\repository\UserRepository.java
