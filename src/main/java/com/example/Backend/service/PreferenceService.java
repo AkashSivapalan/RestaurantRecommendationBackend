@@ -40,8 +40,8 @@ public class PreferenceService {
         return ResponseEntity.status(201).body(this.preferenceRepository.save(pref));
     }
 
-    public ResponseEntity<?> putPreference(String id, Preference updatedPreference) {
-        Optional<Preference> currentPreference = this.preferenceRepository.findById(id);
+    public ResponseEntity<?> putPreference(String email, Preference updatedPreference) {
+        Optional<Preference> currentPreference = this.preferenceRepository.findByEmail(email);
 
         if (currentPreference.isPresent()) {
             return ResponseEntity.status(204).body(this.preferenceRepository.save(updatedPreference));
