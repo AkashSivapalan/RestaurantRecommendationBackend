@@ -31,7 +31,7 @@ public class PreferenceController {
 
     @PutMapping("/pref/{email}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> putPreference(@PathVariable String id, @RequestBody Preference updatedPreference) {
+    public ResponseEntity<?> putPreference(@PathVariable String email, @RequestBody Preference updatedPreference) {
         return prefService.putPreference(email, updatedPreference);
     }
 
