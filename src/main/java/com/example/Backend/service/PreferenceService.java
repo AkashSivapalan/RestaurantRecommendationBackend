@@ -22,8 +22,8 @@ public class PreferenceService {
         this.preferenceRepository = preferenceRepository;
     }
 
-    public ResponseEntity<?> getPreference(String id) {
-        Optional<Preference> preference = this.preferenceRepository.findById(id);
+    public ResponseEntity<?> getPreference(String email) {
+        Optional<Preference> preference = this.preferenceRepository.findByEmail(email);
 
         if (preference.isPresent()) {
             return ResponseEntity.ok(preference);
