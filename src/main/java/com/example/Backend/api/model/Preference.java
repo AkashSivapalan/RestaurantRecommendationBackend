@@ -9,6 +9,7 @@ public class Preference {
     @Id
     private String id;
 
+    private String email;
     private int distance;
     private int price;
     private boolean halal;
@@ -22,6 +23,14 @@ public class Preference {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getDistance() {
@@ -74,8 +83,9 @@ public class Preference {
 
     //public Preference() {}
 
-    public Preference(String id, int distance, int price, boolean halal, boolean vegetarian, boolean vegan, boolean glutenFree) {
+    public Preference(String id, String email, int distance, int price, boolean halal, boolean vegetarian, boolean vegan, boolean glutenFree) {
         this.id = id;
+        this.email = email;
         this.distance = distance;
         this.price = price;
         this.halal = halal;
