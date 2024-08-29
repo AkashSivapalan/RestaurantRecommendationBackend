@@ -29,10 +29,10 @@ public class PreferenceController {
         return prefService.postPreference(id, newPreference);
     }
 
-    @PutMapping("/pref/{id}")
+    @PutMapping("/pref/{email}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> putPreference(@PathVariable String id, @RequestBody Preference updatedPreference) {
-        return prefService.putPreference(id, updatedPreference);
+        return prefService.putPreference(email, updatedPreference);
     }
 
     @DeleteMapping("/pref/{id}")
