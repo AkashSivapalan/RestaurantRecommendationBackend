@@ -1,8 +1,9 @@
 <h1>Resturant Reccomendation App</h1>
 
-<b> [Demo]() </b>
+<b> [Demo]() </b>  
 <b> [Frontend](https://github.com/AkashSivapalan/RestaurantAppFE) </b>
-Demo User: q
+
+Demo User: q  
 Demo Password: q
 
 <h2>Description</h2>
