@@ -25,10 +25,6 @@ public class RegisterRequest {
      */
     private String lname;
 
-    /**
-     * The address of the user.
-     */
-    private Address address;
 
     /**
      * The email address of the user, serving as a unique identifier.

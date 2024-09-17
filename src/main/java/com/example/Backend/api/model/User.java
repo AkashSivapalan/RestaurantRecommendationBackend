@@ -26,7 +26,6 @@ public class User implements UserDetails {
 
     private String lname;
 
-    private Address address;
     private String email;
     private String password;
 
@@ -123,13 +122,6 @@ public class User implements UserDetails {
         this.lname = lname;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
 
     public void setEmail(String email) {
         this.email = email;
