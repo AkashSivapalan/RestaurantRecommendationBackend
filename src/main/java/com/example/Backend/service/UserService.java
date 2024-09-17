@@ -74,7 +74,6 @@ public class UserService {
             User userToUpdate = existingUser.get();
 
             userToUpdate.setEmail(updatedUser.getUsername());
-            userToUpdate.setAddress(updatedUser.getAddress());
             //userToUpdate.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
             userToUpdate.setFname(updatedUser.getFname());
             userToUpdate.setLname(updatedUser.getLname());
