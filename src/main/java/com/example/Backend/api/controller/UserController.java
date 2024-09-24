@@ -1,8 +1,11 @@
 package com.example.Backend.api.controller;
 
+import com.example.Backend.api.model.Preference;
 import com.example.Backend.api.model.User;
 import com.example.Backend.api.model.ChangePasswordRequest;
 import com.example.Backend.api.repository.UserRepository;
+import com.example.Backend.service.FavouriteService;
+import com.example.Backend.service.PreferenceService;
 import com.example.Backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +26,15 @@ import java.util.Optional;
 @RestController
 public class UserController {
     private final UserService userService;
-
+    private final PreferenceService prefService;
+    private final FavouriteService favService;
 
 
 @Autowired
-    public UserController(UserService userService){
-        this.userService=userService;
-
+    public UserController(UserService userService, PreferenceService prefService, FavouriteService favService){
+        this.userService = userService;
+        this.prefService = prefService;
+        this.favService = favService;
     }
 
     @PatchMapping("/change-pass")
@@ -57,16 +62,14 @@ public class UserController {
     }
 
     @DeleteMapping("/user/{email}")
-    @PreAuthorize("isAuthenticated()")
+    //@PreAuthorize("isAuthenticated()")
     public ResponseEntity<User> deleteUser(@PathVariable String email){
 
         Optional<User> user = userService.deleteUser(email);
+        ResponseEntity<?> pref = prefService.deletePreference(email);
+        ResponseEntity<?> fav = favService.deleteFavourite(email);
 
-
-        return user.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-
-
+        return user.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/user/{email}")

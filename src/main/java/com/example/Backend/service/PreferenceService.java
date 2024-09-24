@@ -52,11 +52,11 @@ public class PreferenceService {
         return ResponseEntity.status(404).body("User Not Found");
     }
 
-    public ResponseEntity<?> deletePreference(String id) {
-        Optional<Preference> preference = this.preferenceRepository.findById(id);
+    public ResponseEntity<?> deletePreference(String email) {
+        Optional<Preference> preference = this.preferenceRepository.findByEmail(email);
 
         if (preference.isPresent()) {
-            this.preferenceRepository.deleteById(id);
+            this.preferenceRepository.deleteByEmail(email);
             return ResponseEntity.status(204).build();
         }
 
