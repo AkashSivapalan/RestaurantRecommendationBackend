@@ -62,7 +62,7 @@ public class UserController {
     }
 
     @DeleteMapping("/user/{email}")
-    //@PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<User> deleteUser(@PathVariable String email){
 
         Optional<User> user = userService.deleteUser(email);
